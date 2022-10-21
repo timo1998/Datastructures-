@@ -50,10 +50,71 @@ class DoublyLinkedList:
         self.length += 1
         return True
 
+    def pop_first(self):
+        if self.length == 0:
+            return None
+        temp = self.head
+        if self.length == 1:
+            self.head = None
+            self.tail = None
+        else:
+            self.head = self.head.next
+            self.head.prev = None
+            temp.next = None
+        self.length -= 1
+        return temp
+
+    def get(self, index):
+         if index < 0 or index >= self.length:
+            return None
+         temp = self.head
+         if index < self.length/2:
+             for _ in range(index):
+                 temp = temp.next
+         else:
+             temp = self.tail
+             for _ in range(self.length-1, index, -1):
+                 temp = temp.prev
+         return temp
+
+    def set_value(self, index, value):
+        temp = self.get(index)
+        if temp:
+            temp.value = value
+            return True
+        return False
+
+    def insert(self,index,value):
+        if index < 0 or index >= self.length:
+            return False
+        if index == 0:
+            return self.prepend(value)
+        if index == self.length:
+            return self.append(value)
+
+        new_node = Node(value)
+        before = self.get(index - 1)
+        after = before.next
+
+        new_node.prev = before
+        new_node.next = after
+        before.next = new_node
+        after.prev = new_node
+
+        self.length += 1
+        return True
+
     def print_list(self):
         temp = self.head
         while temp is not None:
             print(temp.value)
             temp = temp.next
 
-mylist = DoublyLinkedList(2)
+mylist = DoublyLinkedList(1)
+mylist.append(2)
+mylist.append(3)
+
+print(mylist.get(2))
+mylist.set_value(1,6)
+mylist.insert(1,7)
+mylist.print_list()
