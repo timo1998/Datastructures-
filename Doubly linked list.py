@@ -56,3 +56,4 @@ class DoublyLinkedList:
             print(temp.value)
             temp = temp.next
 
+mylist = DoublyLinkedList(2)
