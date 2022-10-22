@@ -104,17 +104,26 @@ class DoublyLinkedList:
         self.length += 1
         return True
 
+    def remove(self,index):
+        if index < 0 or index >= self.length:
+            return None
+        if index == 0:
+            return self.pop_first()
+        if index == self.length -1:
+            return self.pop()
+        temp = self.get(index)
+        temp.next.prev = temp.prev
+        temp.prev.next = temp.next
+        temp.next = None
+        temp.prev = None
+        self.length -= 1
+        return temp
+
+
+
     def print_list(self):
         temp = self.head
         while temp is not None:
             print(temp.value)
             temp = temp.next
 
-mylist = DoublyLinkedList(1)
-mylist.append(2)
-mylist.append(3)
-
-print(mylist.get(2))
-mylist.set_value(1,6)
-mylist.insert(1,7)
-mylist.print_list()
